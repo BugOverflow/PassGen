@@ -6,45 +6,167 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>200</height>
+    <width>410</width>
+    <height>255</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>300</width>
-    <height>200</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>PassGen</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>300</width>
-     <height>153</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>450</width>
-     <height>153</height>
-    </size>
-   </property>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>391</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tabRandom">
+     <attribute name="title">
+      <string>Random</string>
+     </attribute>
+     <widget class="QPushButton" name="pushButtonRandomGen">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>10</y>
+        <width>91</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Generate</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxUseSymb">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Use Symbols</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxSize">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>10</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxStrength">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>50</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelSize">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>41</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Size:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelStrength">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>67</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Strength:</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tabTemplate">
+     <attribute name="title">
+      <string>Template</string>
+     </attribute>
+     <widget class="QLineEdit" name="lineEditTemplate">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>271</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <kerning>false</kerning>
+       </font>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonTemplateGen">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>10</y>
+        <width>91</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Generate</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLineEdit" name="lineEditResult">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>146</y>
+      <width>391</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>Generated Password...</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>450</width>
+     <width>410</width>
      <height>25</height>
     </rect>
    </property>
@@ -87,6 +209,9 @@
   <action name="actionCopy_to_Clipboard">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Copy to Clipboard</string>
