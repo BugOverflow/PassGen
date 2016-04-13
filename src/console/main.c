@@ -14,7 +14,7 @@ int main(int argc, char * argv[])
 	parse_options(argc, argv, &pass_options);
 	
     // TEST	
-	printf("%d %d %s %d", pass_options.count, pass_options.strength, pass_options.template, pass_options.mode);
+	//printf("%d %d %s %d", pass_options.count, pass_options.strength, pass_options.template, pass_options.mode);
     
     
     // Освобождаем под конец

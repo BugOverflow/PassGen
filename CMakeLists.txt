@@ -1,10 +1,14 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2.2)
 project(PassGen)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
-list(APPEND CMAKE_INCLUDE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/macros")
 
-file(GLOB_RECURSE PassGen_SOURCES src/*.c src/*.h)
-include_directories(AFTER ${CMAKE_SOURCE_DIR}/src/)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release")
+endif()
 
-add_executable(${PROJECT_NAME} ${PassGen_SOURCES})
+include(cmake/options.cmake)
+include(CheckPlatform)
+include(cmake/showoptions.cmake)
+
+add_subdirectory(src)
