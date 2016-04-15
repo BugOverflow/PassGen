@@ -5,6 +5,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}${QT_PATH}")
+
 find_package(Qt5Widgets)
 
 set(PASSGEN_GUI_HEADERS mainwindow.h)

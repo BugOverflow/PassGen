@@ -1,18 +1,24 @@
 # PassGen
-Курсовой проект группы ИВ-521 по дисциплине "Технологии разработки программного обеспечения(ТРПО)"
+Курсовой проект группы ИВ-521 по дисциплине "Технологии разработки программного обеспечения (ТРПО)"
 
-## Technical order
-...
-
-## Getting started
-You need install this dependencies:
+## Необходимые системные зависимости:
+* Qt5 Framework (для GUI)
 * GNU C Compiler
 * CMake
 
-And enter this in Linux terminal:
+Стандартная сборка:
 ```bash
 mkdir build
 cd build
 cmake ../
 make
 ```
+Можно использовать дополнительные параметры:
+* -DQT_PATH
+	Путь до библиотек Qt
+* -DBUILD_GUI
+	Флаг сборки GUI
+* -DWITH_WARNINGS
+	Показывать все предупреждения при компиляции
+* -DCMAKE_INSTALL_PREFIX
+	Путь для установки бинарных файлов

@@ -12,6 +12,7 @@ message("")
 
 if(BUILD_GUI)
   message("* Build gui		 : Yes")
+  message("* Qt5 path               : ${QT_PATH}")
 else()
   message("* Build gui		 : No (default)")
 endif()
