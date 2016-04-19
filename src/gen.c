@@ -10,19 +10,31 @@ char *generator_template(char* seed, char *input)
 	char *out = malloc(sizeof(char) * strlen(input));
     int i;
 
+    FILE *file_data;
+    file_data = fopen("PATH", "r");
+    char data[1024];
+    fgets(data, 1024, file_data);
+        
+    char *h = hash(file_data);
+    int seed;
+    
     for (i = 0; i < strlen(input); i++) {
         switch (inputp[i]) {
             case C:
-                out[i] = B[];
+                seed = h[i % strlen(input)] * wtime() % strlen(B);
+                out[i] = B[seed];
                 break;
             case c:
-                out[i] = D[];
+                seed = h[i % strlen(input)] * wtime() % strlen(D);
+                out[i] = D[seed];
                 break;
             case d:
-                out[i] = A[];
+                seed = h[i % strlen(input)] * wtime() % strlen(A);
+                out[i] = A[seed];
                 break;
             case s:
-                out[i] =C[];
+                seed = h[i % strlen(input)] * wtime() % strlen(s);
+                out[i] =C[seed];
             
         }
     }

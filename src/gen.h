@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "../md5.h"
+#include "md5.h"
+#include "fanc.h"
 
 char* generator_template(char *input);
 char* generator_default(char *input, int complexity);
