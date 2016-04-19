@@ -29,7 +29,7 @@ char *generator_template(char* seed, char *input)
 	return out;
 }
 
-char *generator_default(char* seed, char *input, int complexity)
+char *generator_default(char *input, int complexity)
 {
 }
 
