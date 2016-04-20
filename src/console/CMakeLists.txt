@@ -1,0 +1,5 @@
+set(PASSGEN_CONSOLE_HEADERS application.h)
+set(PASSGEN_CONSOLE_SOURCES main.c
+							application.c)
+
+add_executable(${PROJECT_NAME} ${PASSGEN_CONSOLE_HEADERS} ${PASSGEN_CONSOLE_SOURCES})
