@@ -36,6 +36,16 @@ char *generator_template(char *input)
                 seed = h[(i + j % strlen(input))] % strlen(SYM);
                 out[i] =SYM[seed];
                 j++;
+                break;
+            case '?':
+                out[i] = input[i];
+                i++;
+                while (input[i] !='?') {
+                    out[i] =input[i];
+                    i++;
+                }
+                out[i] = input[i];
+                break;
         }
     }
 	return out;
