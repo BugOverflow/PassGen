@@ -1,83 +1,83 @@
-// #include "options.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "input.h"
 
-opterr = 0;
-const char KEYS[]= "t:ds:c:"; //arg keys
-int tumbler = 0; // unknown mode
-int strong = -1, count = -1;
-char *templ; // template of password
-
-int main(int argc, char *argv[])
+Data input(int argc, char *argv[])
 {
+	const char *KEYS = "t:ds:c:"; //arg keys
+	opterr = 0;
+
+	Data values;
+	values.templ = NULL;
+	values.mode = 0;
+	values.strong = -1;
+	values.count = -1;
+
 	int c;
 	while ((c = getopt(argc, argv, KEYS)) != -1) // reading args
 	{
 		switch (c)
 		{
 			case 't': // template mode
-				if ( (tumbler == 0) && (count == -1) && (strong == -1) )
+				if ( (values.mode == 0) && (values.count == -1) && (values.strong == -1) )
 				{
-					tumbler = -1;
-					templ = optarg;
+					values.mode = -1;
+					values.templ = optarg;
 					break;
 				}
 				else
 				{
-					fprintf(stderr, "Too many arguments for template mode! Please, try again.\n", optopt);
-					return 1;	
+					fprintf(stderr, "Too many arguments for template mode! Please, try again.\n");
+					values.err = 1;
 				}
 			case 'd': // default mode
-				if (tumbler == 0)
+				if (values.mode == 0)
 				{
-					tumbler = 1;
+					values.mode = 1;
 					break;
 				}
 				else
 				{
-					fprintf(stderr, "Unknown mode! Please, try again.\n", optopt);
-					return 1;	
+					fprintf(stderr, "Unknown mode! Please, try again.\n");
+					values.err = 1;
 				}
 			case 's': // password difficulty
-				if (tumbler != -1)
+				if (values.mode != -1)
 				{
 					int tmp = atoi(optarg);
 					if (tmp > 0)
 					{
-						strong = tmp;
+						values.strong = tmp;
 						break;
 					}
 					else
 					{
-						fprintf(stderr, "Wrong value of strong mode! Please, try again.\n", optopt);
-						return 1;
+						fprintf(stderr, "Wrong value of strong mode! Please, try again.\n");
+						values.err = 1;	
 					}	
 				}
 				else
 				{
-					fprintf(stderr, "Too many arguments for template mode! Please, try again.\n", optopt);
-					return 1;
+					fprintf(stderr, "Too many arguments for template mode! Please, try again.\n");
+					values.err = 1;
 				}
-			case 'c': // count of password symbols
-				if (tumbler != -1)
+			case 'c': // values.count of password symbols
+				if (values.mode != -1)
 				{
 					int tmp = atoi(optarg);
 					if (tmp > 0)
 					{
-						count = tmp;
+						values.count = tmp;
 						break;
 					}
 					else
 					{
-						fprintf(stderr, "Wrong value of password lenght! Please, try again.\n", optopt);
-						return 1;
+						fprintf(stderr, "Wrong value of password lenght! Please, try again.\n");
+						values.err = 1;
 					}
 				}
 				else
 				{
-					fprintf(stderr, "Too many arguments for template mode! Please, try again.\n", optopt);
-					return 1;	
+					fprintf(stderr, "Too many arguments for template mode! Please, try again.\n");
+					values.err = 1;	
 				}
 			case '?':
         		if (optopt == 'c')
@@ -86,14 +86,15 @@ int main(int argc, char *argv[])
           			fprintf (stderr, "Unknown option `-%c'.\n", optopt);
         		else
           			fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
-        		return 1;
+        		values.err = 1;	
       		default:
         		abort ();
       }
 	}
-    printf("Mode: %d TEMPL: %s\n", tumbler, templ);
-    printf("Dmode: %d\n", tumbler);
-    printf("strong: %d\n", strong);
-    printf("Count: %d\n", count);
-    return 0;
+    printf("Mode: %d values.templ: %s\n", values.mode, values.templ);
+    printf("Dmode: %d\n", values.mode);
+    printf("values.strong: %d\n", values.strong);
+    printf("values.count: %d\n", values.count);
+    printf("Error: %d\n", values.err);
+    //return values;
 }
