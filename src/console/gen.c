@@ -2,10 +2,10 @@
 
 char *generator_template(char *input)
 {
-	char NUM[] = {'0','1','2','3','4','5','6','7','8','9'};
-	char UP[] = {'Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M'};
-	char SYM[] = {'!','@','#','$','%','^','&','*','(',')'};
-	char DOWN[] = {'q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'};
+	char NUM[] = {'0','1','2','3','4','5','6','7','8','9', '\0'};
+	char UP[] = {'Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M', '\0'};
+	char SYM[] = {'!','@','#','$','%','^','&','*','(',')', '\0'};
+	char DOWN[] = {'q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m', '\0'};
 	
 	char *out = malloc(sizeof(char) * strlen(input));
     int i, j = 0;
@@ -18,22 +18,22 @@ char *generator_template(char *input)
     for (i = 0; i < strlen(input); i++) {
         switch (input[i]) {
             case 'C':
-                seed = h[(i + j % strlen(input))] % strlen(UP);
+                seed = h[((i +j + ((int) (wtime() - (int) wtime()) * 10000)) % strlen(input))] % strlen(UP);
                 out[i] = UP[seed];
                 j++;
                 break;
             case 'c':
-                seed = h[(i +j % strlen(input))] % strlen(DOWN);
+                seed = h[(((i +j - 1) + ((int) (wtime() - (int) wtime()) * 10000)) % strlen(input))] % strlen(DOWN);
                 out[i] = DOWN[seed];
                 j++;
                 break;
             case 'd':
-                seed = h[(i  + j % strlen(input))] % strlen(NUM);
+                seed = h[((i +j + ((int) (wtime() - (int) wtime()) * 10000)) % strlen(input))] % strlen(NUM);
                 out[i] = NUM[seed];
                 j++;
                 break;
             case 's':
-                seed = h[(i + j % strlen(input))] % strlen(SYM);
+                seed = h[((i +j + ((int) (wtime() - (int) wtime()) * 10000)) % strlen(input))] % strlen(SYM);
                 out[i] =SYM[seed];
                 j++;
                 break;
