@@ -5,7 +5,7 @@ char lowerCase [] = {'a' , 'b' , 'c' , 'd' , 'e' , 'f' ,
                     'l' , 'm', 'n' , 'o' , 'p' ,
                     'q' , 'r' , 's' , 't' , 'u' ,
                     'v' , 'w' , 'x' , 'y' , 'z'} ;
-const unsigned short sizeLowerCase = 25;
+const unsigned short sizeLowerCase = 26;
 bool enableLowerCase = false;
 
 char upperCase [] = {'A' , 'B' , 'C' , 'D' , 'E' , 'F' ,
@@ -13,12 +13,12 @@ char upperCase [] = {'A' , 'B' , 'C' , 'D' , 'E' , 'F' ,
                     'L' , 'M', 'N', 'O', 'P',
                     'Q', 'R' , 'S' , 'T', 'U',
                     'V', 'W', 'X' , 'Y' , 'Z'} ;
-const unsigned short sizeUpperCase = 25;
+const unsigned short sizeUpperCase = 26;
 bool enableUpperCase = false;
 
 char digits [] = {'0' , '1' , '2' , '3' , '4' ,
                     '5' , '6', '7' , '8' , '9'} ;
-const unsigned short sizeDigits = 9;
+const unsigned short sizeDigits = 10;
 bool enableDigits = false;
 
 char symbols [] = {'"', '#' , '$' , '%', '&', 
@@ -27,5 +27,5 @@ char symbols [] = {'"', '#' , '$' , '%', '&',
 					 ';', '<' , '=' , '>','?',
  					'@','[','\\',']','^','_',
  					'`','{','|','}','~'};
-const unsigned short sizeSymbols = 30;
+const unsigned short sizeSymbols = 31;
 bool enableSymbols = false;
