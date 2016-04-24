@@ -6,6 +6,7 @@
 #include <string.h>
 #include "md5.h"
 #include "hash.h"
+#include <assert.h>
 
 #define size_data 256
 
