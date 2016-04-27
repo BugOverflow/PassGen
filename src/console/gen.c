@@ -1,4 +1,5 @@
 #include "gen.h"
+#include "liters.h"
 
 char *generator_template(char *input)
 {
@@ -90,13 +91,13 @@ int get_rand(int min, int max)
     return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;
 }
 
-void default_gen(PassGenOptions data, char *pass)
+void default_gen(PassGenOptions options, char *pass)
 {
     int k, index;
 
-    for (int i = 0; i < data.pass_size; ++i)
+    for (int i = 0; i < options.pass_size; ++i)
     {
-        k = i % data.pass_strength;
+        k = i % options.pass_strength;
 
         switch (k)
         {

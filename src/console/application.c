@@ -1,5 +1,6 @@
 #include "application.h"
-#include "liters.h"
+#include "gen.h"
+#include "parsing.h"
 
 PassGenOptions options = { MODE_DEFAULT, 0, 0, NULL };
 PassGenError err = { ERR_NO, "" };
@@ -10,14 +11,28 @@ int run(int argc, char **argv)
 
     fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
 
-    char word[options.pass_size];
-    default_gen(options, word);
-    printf("%s\n", word);
-    FILE *output = fopen("test.txt", "w");
-    fprintf(output, "%s", word);
-    fclose(output);
-
-
+	char word[options.pass_size];
+	char *t;
+	char *tmp = NULL;
+	
+	switch (options.mode)
+	{
+		case MODE_DEFAULT:
+			
+			default_gen(options, word);
+			printf("%s\n", word);
+			break;
+		case MODE_TEMPLATE:
+			
+			parsing(options.template, &t);
+			
+			tmp = generator_template(t);
+			printf("%s\n", tmp);
+			break;
+	}
+    //FILE *output = fopen("test.txt", "w");
+    //fprintf(output, "%s", word);
+    //fclose(output);
     return 0;
 }
 
@@ -65,7 +80,7 @@ void parse_options(int argc, char **argv)
                 {
                     if (options.mode != MODE_TEMPLATE) {
                         int tmp = atoi(optarg);
-                        if (tmp > 0)
+                        if ((tmp > 0) && (tmp < 5))
                             options.pass_strength = tmp;
                         else
                             handle_err(ERR_PARSING,

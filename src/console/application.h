@@ -33,7 +33,4 @@ int run(int argc, char **argv);
 void handle_err(PassGenErrCode code, char *mess);
 void parse_options(int argc, char **argv);
 
-void default_gen(PassGenOptions data, char *out);
-int get_rand(int min, int max);
-
 #endif

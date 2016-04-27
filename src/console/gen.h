@@ -8,6 +8,7 @@
 #include "hash.h"
 #include <assert.h>
 
+#include "application.h"
 #define size_data 256
 
 char* generator_template(char *input);
