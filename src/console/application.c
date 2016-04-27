@@ -17,22 +17,21 @@ int run(int argc, char **argv)
 	
 	switch (options.mode)
 	{
-		case MODE_DEFAULT:
-			
+		case MODE_DEFAULT:			
 			default_gen(options, word);
 			printf("%s\n", word);
+			tmp = word;
 			break;
-		case MODE_TEMPLATE:
 			
-			parsing(options.template, &t);
-			
+		case MODE_TEMPLATE:			
+			parsing(options.template, &t);			
 			tmp = generator_template(t);
 			printf("%s\n", tmp);
 			break;
 	}
-    //FILE *output = fopen("test.txt", "w");
-    //fprintf(output, "%s", word);
-    //fclose(output);
+    FILE *output = fopen("test.txt", "w");
+    fprintf(output, "%s", tmp);
+    fclose(output);
     return 0;
 }
 
