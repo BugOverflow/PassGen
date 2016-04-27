@@ -10,14 +10,14 @@ int run(int argc, char **argv)
     parse_options(argc, argv);
 
     fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-
-	char word[options.pass_size];
-	char *t;
+    
 	char *tmp = NULL;
+	char *t;
+	char word[options.pass_size];
 	
 	switch (options.mode)
 	{
-		case MODE_DEFAULT:			
+		case MODE_DEFAULT:
 			default_gen(options, word);
 			printf("%s\n", word);
 			tmp = word;
@@ -29,7 +29,7 @@ int run(int argc, char **argv)
 			printf("%s\n", tmp);
 			break;
 	}
-    FILE *output = fopen("test.txt", "w");
+    FILE *output;
     fprintf(output, "%s", tmp);
     fclose(output);
     return 0;
