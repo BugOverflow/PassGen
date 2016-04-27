@@ -14,6 +14,8 @@ char* generator_template(char *input);
 char* generator_default(char *input, int complexity);
 void data(char **str);
 double wtime();
+int get_rand(int min, int max);
+void default_gen(PassGenOptions data, char *pass);
 
 
 #endif
