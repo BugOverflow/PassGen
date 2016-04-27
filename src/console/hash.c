@@ -15,5 +15,6 @@ void hash(char *input, char **output)
     for (di = 0; di < 16; ++di) {
 	    sprintf(hex_output + di * 2, "%02x", digest[di]);
     }
+
     *output = hex_output;
 }
