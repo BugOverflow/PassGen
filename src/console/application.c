@@ -16,23 +16,23 @@ int run(int argc, char **argv)
 	else
 	{
 
-	char *tmp = NULL;
-	char *t;
-	char word[options.pass_size];
+		char *tmp = NULL;
+		char *t;
+		char word[options.pass_size];
 		
 		switch (options.mode)
 		{
-		case MODE_DEFAULT:
-			default_gen(options, word);
-			printf("%s\n", word);
-			tmp = word;
-			break;
+			case MODE_DEFAULT:
+				default_gen(options, word);
+				printf("%s\n", word);
+				tmp = word;
+				break;
 			
-		case MODE_TEMPLATE:			
-			parsing(options.template, &t);			
-			tmp = generator_template(t);
-			printf("%s\n", tmp);
-			break;
+			case MODE_TEMPLATE:			
+				parsing(options.template, &t);			
+				tmp = generator_template(t);
+				printf("%s\n", tmp);
+				break;
 		}
 	}
     return 0;
