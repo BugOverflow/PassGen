@@ -8,12 +8,22 @@ PassGenError err = { ERR_NO, "" };
 int run(int argc, char **argv)
 {
     parse_options(argc, argv);
-
-    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
     
-	char *tmp = NULL;
-	char *t;
-	char word[options.pass_size];
+    if (err.code != ERR_NO)
+    {
+		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+	}
+
+	if (options.mode == MODE_TEMPLATE)
+	{
+		char *tmp = NULL;
+		char *t;
+	}
+		
+	if (options.mode == MODE_DEFAULT)
+	{
+		char word[options.pass_size];
+	}
 	
 	switch (options.mode)
 	{
