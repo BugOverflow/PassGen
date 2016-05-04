@@ -3,36 +3,24 @@
 #include "parsing.h"
 
 PassGenOptions options = { MODE_DEFAULT, 0, 0, NULL };
-PassGenError err = { ERR_NO, "\0" };
+PassGenError err = { ERR_NO, "" };
 
 int run(int argc, char **argv)
 {
     parse_options(argc, argv);
-	
-	if (err.code != ERR_NO)
-	{
-		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-	}
-	    
-	char *tmp = NULL, *word = NULL;
+
+    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+    
+	char *tmp = NULL;
 	char *t;
-	
-	if (options.mode == MODE_DEFAULT)
-	{
-		word = malloc(options.pass_size * sizeof(char));
-	
-		if (word == NULL)
-		{
-			printf("Error of memory allocation!\n");
-			return EXIT_FAILURE;
-		}
-	}
+	char word[options.pass_size];
 	
 	switch (options.mode)
 	{
 		case MODE_DEFAULT:
 			default_gen(options, word);
 			printf("%s\n", word);
+			tmp = word;
 			break;
 			
 		case MODE_TEMPLATE:			
@@ -41,7 +29,9 @@ int run(int argc, char **argv)
 			printf("%s\n", tmp);
 			break;
 	}
-    free(word);
+    FILE *output;
+    fprintf(output, "%s", tmp);
+    fclose(output);
     return 0;
 }
 
