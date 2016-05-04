@@ -13,20 +13,15 @@ int run(int argc, char **argv)
     {
 		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
 	}
+	else
+	{
 
-	if (options.mode == MODE_TEMPLATE)
-	{
-		char *tmp = NULL;
-		char *t;
-	}
+	char *tmp = NULL;
+	char *t;
+	char word[options.pass_size];
 		
-	if (options.mode == MODE_DEFAULT)
-	{
-		char word[options.pass_size];
-	}
-	
-	switch (options.mode)
-	{
+		switch (options.mode)
+		{
 		case MODE_DEFAULT:
 			default_gen(options, word);
 			printf("%s\n", word);
@@ -38,6 +33,7 @@ int run(int argc, char **argv)
 			tmp = generator_template(t);
 			printf("%s\n", tmp);
 			break;
+		}
 	}
     return 0;
 }
