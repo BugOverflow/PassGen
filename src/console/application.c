@@ -39,9 +39,6 @@ int run(int argc, char **argv)
 			printf("%s\n", tmp);
 			break;
 	}
-    FILE *output;
-    fprintf(output, "%s", tmp);
-    fclose(output);
     return 0;
 }
 
