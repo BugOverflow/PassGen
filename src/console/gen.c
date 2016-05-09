@@ -29,7 +29,7 @@ char *generator_template(char *input)
 	char DOWN[] = {'q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m', '\0'};
 	
 	char *out = malloc(sizeof(char) * strlen(input));
-    char *str_data = malloc(sizeof(char) * size_data);
+    char *str_data = NULL;
     char *h = NULL;
     data(&str_data);
     hash(str_data, &h);
@@ -82,6 +82,7 @@ char *generator_template(char *input)
 			}
 		}
 	}
+	out[strlen(input)] = '\0';
 	return out;
 }
 
@@ -102,87 +103,23 @@ void default_gen(PassGenOptions options, char *pass)
         switch (k)
         {
             case 0:
-                index = get_rand(0, sizeLowerCase - 1) % sizeLowerCase;
+                index = get_rand(0, sizeLowerCase - 1);
                 pass[i] = lowerCase[index];
                 break;
             case 1:
-                index = get_rand(0, sizeUpperCase - 1) % sizeLowerCase;
+                index = get_rand(0, sizeUpperCase - 1);
                 pass[i] = upperCase[index];
                 break;
             case 2:
-                index = get_rand(0, sizeDigits - 1) % sizeDigits;
+                index = get_rand(0, sizeDigits - 1);
                 pass[i] = digits[index];
                 break;
             case 3:
-                index = get_rand(0, sizeSymbols - 1) % sizeSymbols;
+                index = get_rand(0, sizeSymbols - 1);
                 pass[i] = symbols[index];
                 break;
         }
     }
-    
+    pass[options.pass_size] = '\0';
     //pass[data.pass_size + 1] = '\n';
-}
-
-
-void data(char **str)
-{
-    char time[32]; // pointer on time
-    char buf[size_data]; // the firsh use to Mhz
-    char name[64]; // login
-    char ip[32]; // IP
-    
-    system("who >buf.txt");
-    system("ifconfig > buf2.txt");
-
-    // Found user's login +
-    FILE *foo;
-    foo = fopen("buf.txt", "r");
-
-    fscanf(foo, "%s\n", name);
-    // Found user's login -
-
-    // Found ip +
-    foo = fopen("buf2.txt", "r");
-
-    while(strcmp(ip, "inet") != 0) {
-        fscanf(foo, "%s\n",  ip);
-    }
-    
-    fscanf(foo, "%s\n", ip);
-    sprintf(ip, "%s", (ip + 5)); // Delete "addr"
-    //Found ip -
-
-    // Found MHz +
-    FILE *file_proc;
-    file_proc = fopen("/proc/cpuinfo", "r");
-
-     while (strcmp(buf, "MHz") != 0) {
-         fscanf(file_proc, "%s", buf);
-     }
-     
-     fscanf(file_proc, "%s", buf);
-     fscanf(file_proc, "%s", buf);
-    // Found MHz -
-
-    // printf("MHZ %s\n", buf);
-    // printf("Name %s\n", name);
-    // printf("Ip %s\n", ip);
-    sprintf(time, "%f", wtime());
-    
-    strcat(buf, name);
-    strcat(buf, ip);
-    strcat(buf, time);
-
-    //printf("Reuslt %s\n", buf);
-    strcpy(*str, buf);
-    system("rm buf.txt buf2.txt");
-    fclose(foo);
-    fclose(file_proc);
-}
-
-double wtime()
-{
-    struct timeval t;
-    gettimeofday(&t, NULL);
-    return (double)t.tv_sec + (double)t.tv_usec * 1E-6;
 }

@@ -7,6 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 
+
 typedef enum {
     MODE_DEFAULT = 0,
     MODE_TEMPLATE = 1
