@@ -1,6 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "parsing.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
