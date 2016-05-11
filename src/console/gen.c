@@ -23,13 +23,8 @@ char *generator_template(char *input)
 	}
 	assert(k % 2 == 0);
 	
-	char NUM[] = {'0','1','2','3','4','5','6','7','8','9', '\0'};
-	char UP[] = {'Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M', '\0'};
-	char SYM[] = {'!','@','#','$','%','^','&','*','(',')', '\0'};
-	char DOWN[] = {'q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m', '\0'};
-	
 	char *out = malloc(sizeof(char) * strlen(input));
-    char *str_data = malloc(sizeof(char) * size_data);
+    char *str_data = NULL;
     char *h = NULL;
     data(&str_data);
     hash(str_data, &h);
@@ -43,20 +38,20 @@ char *generator_template(char *input)
 		
         switch (input[i]) {
             case 'C':
-                seed = seed % strlen(UP);
-                out[i] = UP[seed];
+                seed = seed % strlen(upperCase);
+                out[i] = upperCase[seed];
                 break;
             case 'c':
-                seed = seed % strlen(DOWN);
-                out[i] = DOWN[seed];
+                seed = seed % strlen(lowerCase);
+                out[i] = lowerCase[seed];
                 break;
             case 'd':
-                seed = seed % strlen(NUM);
-                out[i] = NUM[seed];
+                seed = seed % strlen(digits);
+                out[i] = digits[seed];
                 break;
             case 's':
-                seed = seed % strlen(SYM);
-                out[i] =SYM[seed];
+                seed = seed % strlen(symbols);
+                out[i] =symbols[seed];
                 break;
             case '?':
              out[i] = input[i];
@@ -82,6 +77,7 @@ char *generator_template(char *input)
 			}
 		}
 	}
+	out[strlen(input)] = '\0';
 	return out;
 }
 
@@ -119,70 +115,5 @@ void default_gen(PassGenOptions options, char *pass)
                 break;
         }
     }
-    
-    //pass[data.pass_size + 1] = '\n';
-}
-
-
-void data(char **str)
-{
-    char time[32]; // pointer on time
-    char buf[size_data]; // the firsh use to Mhz
-    char name[64]; // login
-    char ip[32]; // IP
-    
-    system("who >buf.txt");
-    system("ifconfig > buf2.txt");
-
-    // Found user's login +
-    FILE *foo;
-    foo = fopen("buf.txt", "r");
-
-    fscanf(foo, "%s\n", name);
-    // Found user's login -
-
-    // Found ip +
-    foo = fopen("buf2.txt", "r");
-
-    while(strcmp(ip, "inet") != 0) {
-        fscanf(foo, "%s\n",  ip);
-    }
-    
-    fscanf(foo, "%s\n", ip);
-    sprintf(ip, "%s", (ip + 5)); // Delete "addr"
-    //Found ip -
-
-    // Found MHz +
-    FILE *file_proc;
-    file_proc = fopen("/proc/cpuinfo", "r");
-
-     while (strcmp(buf, "MHz") != 0) {
-         fscanf(file_proc, "%s", buf);
-     }
-     
-     fscanf(file_proc, "%s", buf);
-     fscanf(file_proc, "%s", buf);
-    // Found MHz -
-
-    // printf("MHZ %s\n", buf);
-    // printf("Name %s\n", name);
-    // printf("Ip %s\n", ip);
-    sprintf(time, "%f", wtime());
-    
-    strcat(buf, name);
-    strcat(buf, ip);
-    strcat(buf, time);
-
-    //printf("Reuslt %s\n", buf);
-    strcpy(*str, buf);
-    system("rm buf.txt buf2.txt");
-    fclose(foo);
-    fclose(file_proc);
-}
-
-double wtime()
-{
-    struct timeval t;
-    gettimeofday(&t, NULL);
-    return (double)t.tv_sec + (double)t.tv_usec * 1E-6;
+    pass[options.pass_size] = '\0';
 }
