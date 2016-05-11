@@ -81,11 +81,6 @@ char *generator_template(char *input)
 	return out;
 }
 
-/* getrand: Returns random number from [min, max) */
-int get_rand(int min, int max)
-{
-    return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;
-}
 
 void default_gen(PassGenOptions options, char *pass)
 {
