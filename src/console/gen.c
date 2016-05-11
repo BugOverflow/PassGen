@@ -90,30 +90,43 @@ int get_rand(int min, int max)
 void default_gen(PassGenOptions options, char *pass)
 {
     int k, index;
+    
+	//hash
+    char *str_data = NULL;
+    char *h = NULL;
+    data(&str_data);
+    hash(str_data, &h);
+    int seed = 0;
 
     for (int i = 0; i < options.pass_size; ++i)
     {
+		for (int j = 0; h[j] != '\0'; j++) 
+		{
+			seed = seed + h[j];
+		}
+		
         k = i % options.pass_strength;
 
         switch (k)
         {
             case 0:
-                index = get_rand(0, sizeLowerCase - 1);
+                index = seed % sizeLowerCase;
                 pass[i] = lowerCase[index];
                 break;
             case 1:
-                index = get_rand(0, sizeUpperCase - 1);
+                index = seed % sizeUpperCase;
                 pass[i] = upperCase[index];
                 break;
             case 2:
-                index = get_rand(0, sizeDigits - 1);
+                index = seed % sizeDigits;
                 pass[i] = digits[index];
                 break;
             case 3:
-                index = get_rand(0, sizeSymbols - 1);
+                index = seed % sizeSymbols;
                 pass[i] = symbols[index];
                 break;
         }
+        hash(h, &h);
     }
     pass[options.pass_size] = '\0';
 }
