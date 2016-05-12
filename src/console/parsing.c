@@ -1,5 +1,7 @@
 #include "parsing.h"
 
+#include <stdio.h>
+
 int parsing(char *input, char **output)
 {
 	int flg = 0;
@@ -19,7 +21,7 @@ int parsing(char *input, char **output)
 		if (input[i] == key[4]) {
 			tmp1 = strchr(&(input[i+1]),key[4]);
 			if (tmp1 == NULL) {
-				return -1;// не нашёл второй ?
+				return -2;// не нашёл второй ?
 			}
 			int step = tmp1	- &(input[i]);
 			i = i + step;
@@ -27,7 +29,7 @@ int parsing(char *input, char **output)
 		tmp1 = strchr(key,input[i]);
 		tmp2 = strchr(sum,input[i]);
 		if ((tmp1 == NULL) && (tmp2 == NULL)) {
-			return -1; // символ не из словаря
+			return -3; // символ не из словаря
 		}
 	}
 

@@ -14,34 +14,29 @@ int run(int argc, char **argv)
 		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
 	}
 	    
-	char *tmp = NULL, *word = NULL;
-	char *t;
-	
-	if (options.mode == MODE_DEFAULT)
-	{
-		word = malloc(options.pass_size * sizeof(char));
-	
-		if (word == NULL)
-		{
-			printf("Error of memory allocation!\n");
-			return EXIT_FAILURE;
-		}
-	}
-	
+	char *pass = NULL;
+	char *s_pars;
 	switch (options.mode)
 	{
 		case MODE_DEFAULT:
-			default_gen(options, word);
-			printf("%s\n", word);
+			pass = malloc(options.pass_size * sizeof(char));
+			if (pass == NULL)
+			{
+			    printf("Error of memory allocation!\n");
+			    return EXIT_FAILURE;
+			}
+			default_gen(options, pass);
+			printf("%s\n", pass);
 			break;
 			
-		case MODE_TEMPLATE:			
-			parsing(options.template, &t);			
-			tmp = generator_template(t);
-			printf("%s\n", tmp);
+		case MODE_TEMPLATE:
+			
+			err.code = parsing(options.template, &s_pars);
+			pass = generator_template(s_pars);
+			printf("%s\n", pass);
 			break;
 	}
-    free(word);
+    free(pass);
     return 0;
 }
 
