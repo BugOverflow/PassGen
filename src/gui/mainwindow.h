@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QClipboard>
+#include <QProcess>
 
 namespace Ui {
 class MainWindow;
@@ -24,7 +25,12 @@ public:
 
 private slots:
     void onTabChanged(int index);
+    void onComboBoxChanged(int index);
+    void onCheckBoxChecked(bool checked);
     void showResult(QString result);
+
+    void randGenerate();
+    void tempGenerate();
 
 private:
     Ui::MainWindow *ui;
