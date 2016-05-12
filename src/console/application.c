@@ -12,10 +12,11 @@ int run(int argc, char **argv)
 	if (err.code != ERR_NO)
 	{
 		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+		return EXIT_FAILURE;
 	}
 	    
 	char *pass = NULL;
-	char *s_pars;
+	char *s_pars = NULL;
 	switch (options.mode)
 	{
 		case MODE_DEFAULT:
@@ -30,10 +31,26 @@ int run(int argc, char **argv)
 			break;
 			
 		case MODE_TEMPLATE:
-			
 			err.code = parsing(options.template, &s_pars);
-			pass = generator_template(s_pars);
-			printf("%s\n", pass);
+			if (err.code == 0) {
+			    pass = generator_template(s_pars);
+			    printf("%s\n", pass);
+			} else if (err.code == -2) {
+			    handle_err(ERR_FUNC_PARSING,
+                                   "The second key \"?\" is not found! Please, try again.");
+			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+			    return EXIT_FAILURE;
+			} else if (err.code == -3) {
+			    handle_err(ERR_FUNC_PARSING,
+                                   "Wrong key! Please, try again.");
+			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+			    return EXIT_FAILURE;
+			} else if (err.code == -4) {
+			    handle_err(ERR_FUNC_PARSING,
+                                   "First symbol key, is then the amount of symbols! Please, try again.");
+			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+			    return EXIT_FAILURE;
+			}
 			break;
 	}
     free(pass);

@@ -23,7 +23,8 @@ typedef struct {
 
 typedef enum {
     ERR_NO = 0,
-    ERR_PARSING
+    ERR_PARSING = 1,
+    ERR_FUNC_PARSING = 2
 } PassGenErrCode;
 
 typedef struct {

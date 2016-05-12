@@ -73,7 +73,6 @@ int parsing(char *input, char **output)
 				//-
 				if ((i+1) != size) {
 					tmp2 = strchr(sum,input[i+1]);
-					//i++;
 					if (tmp2 != NULL) {
 						buf_sum[j] = atoi(&(input[i+1]));
 					}
@@ -88,6 +87,8 @@ int parsing(char *input, char **output)
 				j++;
 			}	
 		}
+		else if (i == 0)
+		    return -4; //первый символ не принадлежит ключам
 	}
 	buf_key[j] = '\0';
 	
