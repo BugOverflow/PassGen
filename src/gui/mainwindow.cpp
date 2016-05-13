@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->actionExit, SIGNAL(triggered(bool)), QApplication::instance(), SLOT(quit()));
+    connect(ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(showAbout(bool)));
     connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(onTabChanged(int)));
 
     connect(ui->pushButtonRandomGen, SIGNAL(pressed()), this, SLOT(randGenerate()));
@@ -107,6 +108,14 @@ void MainWindow::onProcessError(QProcess::ProcessError error)
     }
 
     emit printError(error_string);
+}
+
+void MainWindow::showAbout(bool trigered)
+{
+    trigered = trigered;
+    QMessageBox::information(this, tr("QPassGen About"),
+                          tr("QPassGen 1.0.\n\n"
+                          "Copyright 2016 BugOverflow, Inc."));
 }
 
 void MainWindow::showResult(QString result)

@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>PassGen</string>
+   <string>QPassGen</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">

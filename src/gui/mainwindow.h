@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QErrorMessage>
 #include <QClipboard>
 #include <QProcess>
@@ -36,6 +37,7 @@ private slots:
 
     void onProcessError(QProcess::ProcessError error);
 
+    void showAbout(bool trigered);
     void showResult(QString result);
 
     void randGenerate();
