@@ -86,7 +86,7 @@ void MainWindow::onLineEditTemplateChanged(QString string)
 
 void MainWindow::onProcessError(QProcess::ProcessError error)
 {
-    QString error_string = QString("Error:").append(" %1 ").arg((int)error);
+    QString error_string = QString("Err:").append(" %1 ").arg((int)error);
     switch (error)
     {
     case QProcess::Crashed:
@@ -126,6 +126,12 @@ void MainWindow::randGenerate()
     connect(&run, SIGNAL(error(QProcess::ProcessError)), this, SLOT(onProcessError(QProcess::ProcessError)));
     run.start(QString("./PassGen -d -c%1 -s%2").arg(size).arg(stren), QIODevice::ReadOnly);
     run.waitForFinished();
+    QString err = run.readAllStandardError();
+    if (!err.isEmpty())
+    {
+        emit printError(err);
+        return;
+    }
     if (run.error() == 5)
         showResult(run.readAllStandardOutput());
 }
@@ -138,6 +144,12 @@ void MainWindow::tempGenerate()
     connect(&run, SIGNAL(error(QProcess::ProcessError)), this, SLOT(onProcessError(QProcess::ProcessError)));
     run.start(QString("./PassGen -t %1").arg(templ), QIODevice::ReadOnly);
     run.waitForFinished();
+    QString err = run.readAllStandardError();
+    if (!err.isEmpty())
+    {
+        emit printError(err);
+        return;
+    }
     if (run.error() == 5)
         showResult(run.readAllStandardOutput());
 }
