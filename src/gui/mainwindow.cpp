@@ -13,8 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonRandomGen, SIGNAL(pressed()), this, SLOT(randGenerate()));
     connect(ui->pushButtonTemplateGen, SIGNAL(pressed()), this, SLOT(tempGenerate()));
 
+    connect(ui->spinBoxSize, SIGNAL(valueChanged(int)), this, SLOT(onSpinBoxSizeChanged(int)));
     connect(ui->checkBoxUseSymb, SIGNAL(toggled(bool)), this, SLOT(onCheckBoxChecked(bool)));
     connect(ui->comboBoxStrength, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboBoxChanged(int)));
+
+    connect(ui->lineEditTemplate, SIGNAL(returnPressed()), ui->pushButtonTemplateGen, SLOT(click()));
+    connect(ui->lineEditTemplate, SIGNAL(textChanged(QString)), this, SLOT(onLineEditTemplateChanged(QString)));
 
     ui->comboBoxStrength->addItem("Easy", 1);
     ui->comboBoxStrength->addItem("Medium", 2);
@@ -22,10 +26,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->comboBoxStrength->addItem("Paranoid", 4);
 
     ui->lineEditResult->setDisabled(true);
+    ui->pushButtonRandomGen->setDisabled(true);
+    ui->pushButtonTemplateGen->setDisabled(true);
+
+    err_dialog = new QErrorMessage(this);
+    connect(this, SIGNAL(printError(QString)), err_dialog, SLOT(showMessage(QString)));
 }
 
 MainWindow::~MainWindow()
 {
+    delete err_dialog;
     delete ui;
 }
 
@@ -52,10 +62,51 @@ void MainWindow::onComboBoxChanged(int index)
         ui->checkBoxUseSymb->setChecked(true);
 }
 
+void MainWindow::onSpinBoxSizeChanged(int value)
+{
+    if (value > 0)
+        ui->pushButtonRandomGen->setEnabled(true);
+    else
+        ui->pushButtonRandomGen->setDisabled(true);
+}
+
 void MainWindow::onCheckBoxChecked(bool checked)
 {
     if (checked)
         ui->comboBoxStrength->setCurrentIndex(3);
+}
+
+void MainWindow::onLineEditTemplateChanged(QString string)
+{
+    if (string.size() > 0)
+        ui->pushButtonTemplateGen->setEnabled(true);
+    else
+        ui->pushButtonTemplateGen->setDisabled(true);
+}
+
+void MainWindow::onProcessError(QProcess::ProcessError error)
+{
+    QString error_string = QString("Error:").append(" %1 ").arg((int)error);
+    switch (error)
+    {
+    case QProcess::Crashed:
+        error_string.append("\"Crashed\"");
+        break;
+    case QProcess::Timedout:
+        error_string.append("\"Timeout\"");
+        break;
+    case QProcess::FailedToStart:
+        error_string.append("\"Failed to start PassGen\"");
+        break;
+    case QProcess::ReadError:
+        error_string.append("\"Failed to read pipe\"");
+        break;
+    case QProcess::WriteError:
+    case QProcess::UnknownError:
+        break;
+    }
+
+    emit printError(error_string);
 }
 
 void MainWindow::showResult(QString result)
@@ -72,9 +123,11 @@ void MainWindow::randGenerate()
     int stren = ui->comboBoxStrength->currentData().toInt();
 
     QProcess run;
+    connect(&run, SIGNAL(error(QProcess::ProcessError)), this, SLOT(onProcessError(QProcess::ProcessError)));
     run.start(QString("./PassGen -d -c%1 -s%2").arg(size).arg(stren), QIODevice::ReadOnly);
     run.waitForFinished();
-    showResult(run.readAllStandardOutput());
+    if (run.error() == 5)
+        showResult(run.readAllStandardOutput());
 }
 
 void MainWindow::tempGenerate()
@@ -82,7 +135,9 @@ void MainWindow::tempGenerate()
     QString templ = ui->lineEditTemplate->text();
 
     QProcess run;
+    connect(&run, SIGNAL(error(QProcess::ProcessError)), this, SLOT(onProcessError(QProcess::ProcessError)));
     run.start(QString("./PassGen -t %1").arg(templ), QIODevice::ReadOnly);
     run.waitForFinished();
-    showResult(run.readAllStandardOutput());
+    if (run.error() == 5)
+        showResult(run.readAllStandardOutput());
 }

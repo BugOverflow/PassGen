@@ -7,10 +7,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    consoleworker.cpp
+        mainwindow.cpp
 
-HEADERS  += mainwindow.h \
-    consoleworker.h
+HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui

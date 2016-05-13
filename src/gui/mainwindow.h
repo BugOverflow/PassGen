@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QErrorMessage>
 #include <QClipboard>
 #include <QProcess>
 
@@ -23,10 +24,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void printError(QString);
+
 private slots:
     void onTabChanged(int index);
     void onComboBoxChanged(int index);
+    void onSpinBoxSizeChanged(int value);
     void onCheckBoxChecked(bool checked);
+    void onLineEditTemplateChanged(QString string);
+
+    void onProcessError(QProcess::ProcessError error);
+
     void showResult(QString result);
 
     void randGenerate();
@@ -34,6 +43,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QErrorMessage *err_dialog;
 };
 
 #endif // MAINWINDOW_H
