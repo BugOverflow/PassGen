@@ -83,6 +83,9 @@
         <height>31</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Size need to be &amp;lt; 33&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="maximum">
        <number>32</number>
       </property>
@@ -143,6 +146,12 @@
         <kerning>false</kerning>
        </font>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;C - Upper char&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;c - Lower char&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;d - Digit&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;s - Symbol&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="placeholderText">
+       <string>Your template...</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="pushButtonTemplateGen">
       <property name="geometry">
@@ -173,6 +182,9 @@
       <pointsize>16</pointsize>
       <kerning>false</kerning>
      </font>
+    </property>
+    <property name="maxLength">
+     <number>256</number>
     </property>
     <property name="readOnly">
      <bool>true</bool>
