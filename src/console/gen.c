@@ -100,7 +100,7 @@ void default_gen(PassGenOptions options, char *pass)
 			seed = seed + h[j];
 		}
 		
-        k = i % options.pass_strength;
+        k = seed % options.pass_strength;
 
         switch (k)
         {
