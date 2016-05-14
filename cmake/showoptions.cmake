@@ -17,6 +17,12 @@ else()
   message("* Build gui		 : No (default)")
 endif()
 
+if(BUILD_TEST)
+  message("* Build test             : Yes")
+else()
+  massege("* Build test          : No (default)")
+endif()
+
 if(WITH_WARNINGS)
   message("* Show all warnings      : Yes")
 else()
