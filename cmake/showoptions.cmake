@@ -20,7 +20,7 @@ endif()
 if(BUILD_TEST)
   message("* Build test             : Yes")
 else()
-  message("* Build test          : No (default)")
+  message("* Build test             : No (default)")
 endif()
 
 if(WITH_WARNINGS)
