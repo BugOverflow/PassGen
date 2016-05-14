@@ -1,5 +1,6 @@
 #include "ctest.h"
 #include "../console/parsing.h"
+#include <stdio.h>
 
 CTEST(parsing, return_test)
 {
@@ -7,7 +8,7 @@ CTEST(parsing, return_test)
     char *output;
     int flg;
     
-    input = "C4s3d2c1d3c2?qwert?2";
+    sprintf(input, "%s", "C4s3d2c1d3c2?qwert?2");
     
     flg = parsing(input, &output);
     ASSERT_STR("CCCCsssddcdddcc?qwert??qwert?", output);
@@ -21,7 +22,7 @@ CTEST(parsing, err_key_test)
     char *output = NULL;
     int flg;
     
-    input = "cdr";
+    sprintf(input, "%s", "cdr");
     
     flg = parsing(input, &output);
     ASSERT_NULL(output);
@@ -46,7 +47,7 @@ CTEST(parsing, no_question_key_test)
     char *output = NULL;
     int flg;
     
-    input = "C4s3d2c1d3c2?qwert";
+    sprintf(input, "%s", "C4s3d2c1d3c2?qwert");
     
     flg = parsing(input, &output);
     ASSERT_EQUAL(-2, flg);
