@@ -1,4 +1,4 @@
 # CMake files
-/build
+/bin/*
 /build/*
 *.pro.user
