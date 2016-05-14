@@ -1,11 +1,13 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "parsing.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
 
 typedef enum {
     MODE_DEFAULT = 0,
@@ -21,7 +23,8 @@ typedef struct {
 
 typedef enum {
     ERR_NO = 0,
-    ERR_PARSING
+    ERR_PARSING = 1,
+    ERR_FUNC_PARSING = 2
 } PassGenErrCode;
 
 typedef struct {
@@ -32,8 +35,5 @@ typedef struct {
 int run(int argc, char **argv);
 void handle_err(PassGenErrCode code, char *mess);
 void parse_options(int argc, char **argv);
-
-void default_gen(PassGenOptions data, char *out);
-int get_rand(int min, int max);
 
 #endif

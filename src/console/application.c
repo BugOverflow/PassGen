@@ -1,23 +1,59 @@
 #include "application.h"
-#include "liters.h"
+#include "gen.h"
+
 
 PassGenOptions options = { MODE_DEFAULT, 0, 0, NULL };
-PassGenError err = { ERR_NO, "" };
+PassGenError err = { ERR_NO, "\0" };
 
 int run(int argc, char **argv)
 {
     parse_options(argc, argv);
-
-    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-
-    char word[options.pass_size];
-    default_gen(options, word);
-    printf("%s\n", word);
-    FILE *output = fopen("test.txt", "w");
-    fprintf(output, "%s", word);
-    fclose(output);
-
-
+	
+	if (err.code != ERR_NO)
+	{
+		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+		return EXIT_FAILURE;
+	}
+	    
+	char *pass = NULL;
+	char *s_pars = NULL;
+	switch (options.mode)
+	{
+		case MODE_DEFAULT:
+			pass = malloc(options.pass_size * sizeof(char));
+			if (pass == NULL)
+			{
+			    printf("Error of memory allocation!\n");
+			    return EXIT_FAILURE;
+			}
+			default_gen(options, pass);
+			printf("%s\n", pass);
+			break;
+			
+		case MODE_TEMPLATE:
+			err.code = parsing(options.template, &s_pars);
+			if (err.code == 0) {
+			    pass = generator_template(s_pars);
+			    printf("%s\n", pass);
+			} else if (err.code == -2) {
+			    handle_err(ERR_FUNC_PARSING,
+                                   "The second key \"?\" is not found! Please, try again.");
+			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+			    return EXIT_FAILURE;
+			} else if (err.code == -3) {
+			    handle_err(ERR_FUNC_PARSING,
+                                   "Wrong key! Please, try again.");
+			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+			    return EXIT_FAILURE;
+			} else if (err.code == -4) {
+			    handle_err(ERR_FUNC_PARSING,
+                                   "First symbol key, is then the amount of symbols! Please, try again.");
+			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+			    return EXIT_FAILURE;
+			}
+			break;
+	}
+    free(pass);
     return 0;
 }
 
@@ -65,7 +101,7 @@ void parse_options(int argc, char **argv)
                 {
                     if (options.mode != MODE_TEMPLATE) {
                         int tmp = atoi(optarg);
-                        if (tmp > 0)
+                        if ((tmp > 0) && (tmp < 5))
                             options.pass_strength = tmp;
                         else
                             handle_err(ERR_PARSING,
@@ -112,40 +148,3 @@ void parse_options(int argc, char **argv)
 
 
 
-/* getrand: Returns random number from [min, max) */
-int get_rand(int min, int max)
-{
-    return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;
-}
-
-void default_gen(PassGenOptions data, char *pass)
-{
-    int k, index;
-
-    for (int i = 0; i < data.pass_size; ++i)
-    {
-        k = i % data.pass_strength;
-
-        switch (k)
-        {
-            case 0:
-                index = get_rand(0, sizeLowerCase - 1) % sizeLowerCase;
-                pass[i] = lowerCase[index];
-                break;
-            case 1:
-                index = get_rand(0, sizeUpperCase - 1) % sizeLowerCase;
-                pass[i] = upperCase[index];
-                break;
-            case 2:
-                index = get_rand(0, sizeDigits - 1) % sizeDigits;
-                pass[i] = digits[index];
-                break;
-            case 3:
-                index = get_rand(0, sizeSymbols - 1) % sizeSymbols;
-                pass[i] = symbols[index];
-                break;
-        }
-    }
-    
-    //pass[data.pass_size + 1] = '\n';
-}
