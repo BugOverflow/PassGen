@@ -11,8 +11,8 @@ int parsing(char *input, char **output)
 	}
 	
 	int size = strlen(input);
-	char key[] = {'C', 'c', 'd' ,'s', '?'};
-	char sum[] = {'0','1','2','3','4','5','6','7','8','9'};
+	char key[] = {'C', 'c', 'd' ,'s', '?', '\0'};
+	char sum[] = {'0','1','2','3','4','5','6','7','8','9', '\0'};
 	int i;
 	//проверка входной строки на допустимые символы
 	char *tmp1, *tmp2;
