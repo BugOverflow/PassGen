@@ -84,6 +84,7 @@ int generator_template(char *input, char **output)
 	}
 	out[strlen(input)] = '\0';
 	*output = out;
+	return 0; // All is OK
 }
 
 
