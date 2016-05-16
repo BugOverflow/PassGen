@@ -1,16 +1,20 @@
 #include "gen.h"
 #include "liters.h"
 
-char *generator_template(char *input)
+int *generator_template(char *input, **output)
 {
-	assert(input);
+	if (input == NULL) {
+		return -1; // нулевая строка
+	}
 	
 	int i, j, k = 0;
 	
 	for (i = 0; (input[i] != '\0'); i++) {
-		assert((input[i] == '?') || (input[i] == 'c') || (input[i] == 'd') || (input[i] == 's') || (input[i] == '\0') || (input[i] == 'C'));
+		if (!((input[i] == '?') || (input[i] == 'c') || (input[i] == 'd') || (input[i] == 's') || (input[i] == '\0') || (input[i] == 'C')))
+			return -3; // символ не из словаря
 		if ( input[i] == '?') {
-			assert(input[i] != input[i + 1]);
+			if (input[i] == input[i + 1])
+				return -4; // Подряд ??
 			k++;
 			do {
 				i++;
@@ -21,7 +25,8 @@ char *generator_template(char *input)
 			} while ((input[i] != '?') && input[i] != '\0');
 		}
 	}
-	assert(k % 2 == 0);
+	if (!(k % 2 == 0))
+		return -2; // не найден второй ?
 	
 	char *out = malloc(sizeof(char) * strlen(input));
     char *str_data = NULL;
@@ -78,7 +83,7 @@ char *generator_template(char *input)
 		}
 	}
 	out[strlen(input)] = '\0';
-	return out;
+	*output = out;
 }
 
 
