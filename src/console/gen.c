@@ -1,7 +1,7 @@
 #include "gen.h"
 #include "liters.h"
 
-int *generator_template(char *input, **output)
+int generator_template(char *input, char **output)
 {
 	if (input == NULL) {
 		return -1; // нулевая строка

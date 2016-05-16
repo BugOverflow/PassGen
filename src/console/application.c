@@ -33,7 +33,7 @@ int run(int argc, char **argv)
 		case MODE_TEMPLATE:
 			err.code = parsing(options.template, &s_pars);
 			if (err.code == 0) {
-			    pass = generator_template(s_pars);
+			    generator_template(s_pars, &pass);
 			    printf("%s\n", pass);
 			} else if (err.code == -2) {
 			    handle_err(ERR_FUNC_PARSING,
