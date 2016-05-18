@@ -11,3 +11,5 @@ set(CF_TEST_SOURCES main.c
 					
 
 add_executable(${PROJECT_NAME}Test ${CF_TEST_HEADERS} ${CF_TEST_SOURCES})
+
+add_custom_target(tests COMMAND ${EXECUTABLE_OUTPUT_PATH}/PassGenTest DEPENDS ${PROJECT_NAME}Test)
