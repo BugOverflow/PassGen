@@ -1,4 +1,4 @@
-# PassGen
+# PassGen [![Build Status](https://travis-ci.org/BugOverflow/PassGen.svg?branch=master)](https://travis-ci.org/BugOverflow/PassGen)
 ![](/GUI_Screen.png?raw=true "Пример графического интерфейса")
 
 Курсовой проект группы ИВ-521 по дисциплине "Технологии разработки программного обеспечения (ТРПО)"
