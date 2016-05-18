@@ -9,8 +9,6 @@ int generator_template(char *input, char **output)
 	if (input == NULL) {
 		return -1; // нулевая строка
 	}
-	
-	printf("%d\n", strlen(input));
 	for (i = 0; i < strlen(input); i++) {
 		if (input[i] == 'c' || input[i] == 'C' || input[i] == 'd' ||
 		    input[i] == 's' || input[i] == '?') {
