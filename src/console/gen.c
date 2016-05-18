@@ -3,32 +3,37 @@
 
 int generator_template(char *input, char **output)
 {
+	int i, j, k = 0;
+	int length = 0;
+	
 	if (input == NULL) {
 		return -1; // нулевая строка
 	}
 	
-	int i, j, k = 0;
-	
-	for (i = 0; (input[i] != '\0'); i++) {
-		if (!((input[i] == '?') || (input[i] == 'c') || (input[i] == 'd') || (input[i] == 's') || (input[i] == '\0') || (input[i] == 'C')))
-			return -3; // символ не из словаря
-		if ( input[i] == '?') {
-			if (input[i] == input[i + 1])
-				return -4; // Подряд ??
-			k++;
-			do {
+	printf("%d\n", strlen(input));
+	for (i = 0; i < strlen(input); i++) {
+		if (input[i] == 'c' || input[i] == 'C' || input[i] == 'd' ||
+		    input[i] == 's' || input[i] == '?') {
+			
+			if (input[i] == '?' && i < strlen(input)) {
 				i++;
-				if ( input[i] == '?') {
-					k++;
-					break;
+				k++;
+				while (input[i] != '?' && i < strlen(input)) {
+					
+					i++;
 				}
-			} while ((input[i] != '?') && input[i] != '\0');
-		}
+				if (input[i] == '?')
+					k++;			
+			}
+				
+		} else
+				return -3; // symbol not from dict
 	}
-	if (!(k % 2 == 0))
-		return -2; // не найден второй ?
 	
-	char *out = malloc(sizeof(char) * strlen(input));
+	if (k % 2 != 0)
+		return -2;// once ?
+			
+	char *out = calloc(strlen(input), sizeof(char));
     char *str_data = NULL;
     char *h = NULL;
     data(&str_data);
@@ -45,24 +50,29 @@ int generator_template(char *input, char **output)
             case 'C':
                 seed = seed % strlen(upperCase);
                 out[i] = upperCase[seed];
+                length++;
                 break;
             case 'c':
                 seed = seed % strlen(lowerCase);
                 out[i] = lowerCase[seed];
+                length++;
                 break;
             case 'd':
                 seed = seed % strlen(digits);
                 out[i] = digits[seed];
+                length++;
                 break;
             case 's':
                 seed = seed % strlen(symbols);
                 out[i] =symbols[seed];
+                length++;
                 break;
             case '?':
              out[i] = input[i];
                 i++;
                 while (input[i] !='?') {
-                    out[i] =input[i];
+                    out[i] = input[i];
+                    length++;
                     i++;
                 }
                 out[i] = input[i];
@@ -82,7 +92,8 @@ int generator_template(char *input, char **output)
 			}
 		}
 	}
-	out[strlen(input)] = '\0';
+	
+	out[length] = '\0';
 	*output = out;
 	return 0; // All is OK
 }

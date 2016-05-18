@@ -134,6 +134,7 @@ int parsing(char *input, char **output)
 	}
 	free(buf_key);
 	free(buf_sum);
+	tmp[out_size] = '\0';
 	*output = tmp;
 	return flg;
 }

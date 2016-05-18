@@ -8,7 +8,7 @@ CTEST(gen_template, return_test)
     char *output;
     int flg;
     
-    sprintf(input, "%s", "?cat?catddddddddddssssssCCCCc");
+    sprintf(input, "%s", "?cat?ddddddddddssssssCCCCc");
     
     flg = generator_template(input, &output);
     ASSERT_EQUAL(0, flg);
@@ -48,6 +48,6 @@ CTEST(gen_template, no_question_key_test)
     sprintf(input, "%s", "sdddd?cat");
     
     flg = generator_template(input, &output);
-    ASSERT_EQUAL(-4, flg);
+    ASSERT_EQUAL(-2, flg);
     free(input);
 }
