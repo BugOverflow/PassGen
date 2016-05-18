@@ -1,24 +1,7 @@
-language: c
-
 sudo: required
 dist: trusty
-
-addons:
- apt:
-   sources:
-   - ubuntu-toolchain-r-test
-   packages:
-   - gcc-4.8
-   - g++-4.8
- apt:
-    sources:
-      - george-edison55-precise-backports
-    packages:
-      - cmake
-      - cmake-data
-
-script: 
-   - "cmake --version"
-   - cd ./build
-   - cmake ../ -DBUILD_TEST=1
-   - make tests
+language: c
+compiler: gcc
+install: travis/travis-installdep.sh
+script: travis/travis-build.sh
+after_script: travis/travis-tests.sh
