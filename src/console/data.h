@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-char *read_pipe(FILE *input);
+char *read_pipe(FILE * input);
 void data(char **str);
 double wtime();
 

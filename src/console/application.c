@@ -8,65 +8,61 @@ PassGenError err = { ERR_NO, "\0" };
 int run(int argc, char **argv)
 {
     parse_options(argc, argv);
-	
-	if (err.code != ERR_NO)
-	{
-		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-		return EXIT_FAILURE;
-	}
-	    
-	char *pass = NULL;
-	char *s_pars = NULL;
-	switch (options.mode)
-	{
-		case MODE_DEFAULT:
-			pass = malloc(options.pass_size * sizeof(char));
-			if (pass == NULL)
-			{
-			    printf("Error of memory allocation!\n");
-			    return EXIT_FAILURE;
-			}
-			default_gen(options, pass);
-			printf("%s\n", pass);
-			break;
-			
-		case MODE_TEMPLATE:
-			err.code = parsing(options.template, &s_pars);
-			if (err.code == 0) {
-			    err.code = generator_template(s_pars, &pass);
-			    if (err.code == 0) {
-					printf("%s\n", pass);
-				} else if (err.code == -2) {
-					handle_err(ERR_FUNC_TEMLATE_GEN,
-                                   "The second key \"?\" is not found! Please, try again.");
-					fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-					return EXIT_FAILURE;
-				} else if (err.code == -3) {
-					handle_err(ERR_FUNC_TEMLATE_GEN,
-                                   "Wrong key! Please, try again.");
-					fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-					return EXIT_FAILURE;
-				}
-			} else if (err.code == -2) {
-			    handle_err(ERR_FUNC_PARSING,
-                                   "The second key \"?\" is not found! Please, try again.");
-			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-			    return EXIT_FAILURE;
-			} else if (err.code == -3) {
-			    handle_err(ERR_FUNC_PARSING,
-                                   "Wrong key! Please, try again.");
-			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-			    return EXIT_FAILURE;
-			} else if (err.code == -4) {
-			    handle_err(ERR_FUNC_PARSING,
-                                   "First symbol key, is then the amount of symbols! Please, try again.");
-			    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-			    return EXIT_FAILURE;
-			}
-			break;
-	}
-	if (!pass)
-		free(pass);
+
+    if (err.code != ERR_NO) {
+        fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+        return EXIT_FAILURE;
+    }
+
+    char *pass = NULL;
+    char *s_pars = NULL;
+    switch (options.mode) {
+        case MODE_DEFAULT:
+            pass = malloc(options.pass_size * sizeof(char));
+            if (pass == NULL) {
+                printf("Error of memory allocation!\n");
+                return EXIT_FAILURE;
+            }
+            default_gen(options, pass);
+            printf("%s\n", pass);
+            break;
+
+        case MODE_TEMPLATE:
+            err.code = parsing(options.template, &s_pars);
+            if (err.code == 0) {
+                err.code = generator_template(s_pars, &pass);
+                if (err.code == 0) {
+                    printf("%s\n", pass);
+                } else if (err.code == -2) {
+                    handle_err(ERR_FUNC_TEMLATE_GEN,
+                               "The second key \"?\" is not found! Please, try again.");
+                    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                    return EXIT_FAILURE;
+                } else if (err.code == -3) {
+                    handle_err(ERR_FUNC_TEMLATE_GEN,
+                               "Wrong key! Please, try again.");
+                    fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                    return EXIT_FAILURE;
+                }
+            } else if (err.code == -2) {
+                handle_err(ERR_FUNC_PARSING,
+                           "The second key \"?\" is not found! Please, try again.");
+                fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                return EXIT_FAILURE;
+            } else if (err.code == -3) {
+                handle_err(ERR_FUNC_PARSING, "Wrong key! Please, try again.");
+                fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                return EXIT_FAILURE;
+            } else if (err.code == -4) {
+                handle_err(ERR_FUNC_PARSING,
+                           "First symbol key, is then the amount of symbols! Please, try again.");
+                fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                return EXIT_FAILURE;
+            }
+            break;
+    }
+    if (!pass)
+        free(pass);
     return 0;
 }
 
@@ -153,11 +149,3 @@ void parse_options(int argc, char **argv)
         }
     }
 }
-
-
-
-
-
-
-
-
