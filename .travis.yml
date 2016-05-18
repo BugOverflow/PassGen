@@ -1,0 +1,4 @@
+language: c
+
+script: build/cmake -DBUILD_TEST=1
+	build/make tests
