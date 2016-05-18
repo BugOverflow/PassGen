@@ -9,7 +9,6 @@
 #include "application.h"
 
 int generator_template(char *input, char **output);
-int get_rand(int min, int max);
-void default_gen(PassGenOptions data, char *pass);
+int default_gen(PassGenOptions data, char *pass);
 
 #endif

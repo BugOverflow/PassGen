@@ -25,7 +25,8 @@ typedef enum {
     ERR_NO = 0,
     ERR_PARSING = 1,
     ERR_FUNC_PARSING = 2,
-    ERR_FUNC_TEMLATE_GEN = 3
+    ERR_FUNC_TEMLATE_GEN = 3,
+    ERR_FUNC_DEFOULT_GEN = 4
 } PassGenErrCode;
 
 typedef struct {

@@ -23,7 +23,13 @@ int run(int argc, char **argv)
                 printf("Error of memory allocation!\n");
                 return EXIT_FAILURE;
             }
-            default_gen(options, pass);
+            err.code = default_gen(options, pass);
+	    if (err.code == -1) {
+		handle_err(ERR_FUNC_DEFOULT_GEN,
+                               "Incorrect length of pass!  Please, try again.");
+		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+		return EXIT_FAILURE;
+	    }
             printf("%s\n", pass);
             break;
 
@@ -124,7 +130,7 @@ void parse_options(int argc, char **argv)
                 {
                     if (options.mode != MODE_TEMPLATE) {
                         int tmp = atoi(optarg);
-                        if (tmp > 0)
+                        if (tmp > 0 && tmp <= 32)
                             options.pass_size = tmp;
                         else
                             handle_err(ERR_PARSING,
