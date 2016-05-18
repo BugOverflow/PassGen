@@ -20,5 +20,5 @@ addons:
 script: 
    - "cmake --version"
    - cd ./build
-   - cmake ../
+   - cmake ../ -DBUILD_TEST=1
    - make tests
