@@ -6,6 +6,7 @@ set(CF_TEST_SOURCES main.c
 			    ../console/hash.c
 			    ../console/application.c
 			    ../console/data.c
+			    ../console/config.c
 			    parsing_test.c
 			    template_test.c
 			    default_test.c)
