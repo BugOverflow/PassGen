@@ -20,10 +20,10 @@ int sstr(char txt[], char p[]);
 void copy(char s1[], char s2[]);
 
 //значение параметра
-char* returnvalue(char *str, char *mode);
+char *returnvalue(char *str, char *mode);
 
 void get_template(char str[], char mode[], char value[]);
 
-int confreader(char *path, PassGenOptions *options);
+int confreader(char *path, PassGenOptions * options);
 
 #endif

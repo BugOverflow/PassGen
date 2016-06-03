@@ -8,11 +8,10 @@ PassGenError err = { ERR_NO, "\0" };
 
 int run(int argc, char **argv)
 {
-	if (argc < 2) 
-	{
+    if (argc < 2) {
         handle_err(ERR_PARSING, "There's no arguments! Please, try again.");
-    }
-    else parse_options(argc, argv);
+    } else
+        parse_options(argc, argv);
 
     if (err.code != ERR_NO) {
         fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
@@ -29,24 +28,23 @@ int run(int argc, char **argv)
                 return EXIT_FAILURE;
             }
             err.code = default_gen(options, pass);
-	    if (err.code == -1) {
-		handle_err(ERR_FUNC_DEFOULT_GEN,
-                               "Incorrect length of pass!  Please, try again.");
-		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-		return EXIT_FAILURE;
-	    }
-	    if (err.code == -2) {
-		handle_err(ERR_FUNC_DEFOULT_GEN,
-                               "Incorrect strength of password!  Please, try again.");
-		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-		return EXIT_FAILURE;
-	    }
-	    if (err.code == -3) {
-		handle_err(ERR_FUNC_DEFOULT_GEN,
-                               "Error of memory allocation!");
-		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
-		return EXIT_FAILURE;
-	    }
+            if (err.code == -1) {
+                handle_err(ERR_FUNC_DEFOULT_GEN,
+                           "Incorrect length of pass!  Please, try again.");
+                fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                return EXIT_FAILURE;
+            }
+            if (err.code == -2) {
+                handle_err(ERR_FUNC_DEFOULT_GEN,
+                           "Incorrect strength of password!  Please, try again.");
+                fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                return EXIT_FAILURE;
+            }
+            if (err.code == -3) {
+                handle_err(ERR_FUNC_DEFOULT_GEN, "Error of memory allocation!");
+                fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+                return EXIT_FAILURE;
+            }
             printf("%s\n", pass);
             break;
 
@@ -97,7 +95,7 @@ void handle_err(PassGenErrCode code, char *mess)
 
 void parse_options(int argc, char **argv)
 {
-    const char *KEYS = "p:t:ds:c:";       //arg keys
+    const char *KEYS = "p:t:ds:c:";     //arg keys
     opterr = 0;
 
     int c;
@@ -152,11 +150,11 @@ void parse_options(int argc, char **argv)
                                    "Too many arguments for template mode! Please, try again.");
                     break;
                 }
-            case 'p':         //config
+            case 'p':          //config
                 {
-                  options.path = optarg;
-                  confreader(optarg, &options);
-                  break;
+                    options.path = optarg;
+                    confreader(optarg, &options);
+                    break;
                 }
             case '?':
                 {
