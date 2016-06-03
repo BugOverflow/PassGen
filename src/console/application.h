@@ -20,6 +20,7 @@ typedef struct {
     int pass_size;
     int pass_strength;
     char *template;
+    char *path;
 } PassGenOptions;
 
 typedef enum {
@@ -39,7 +40,6 @@ int run(int argc, char **argv);
 void handle_err(PassGenErrCode code, char *mess);
 void parse_options(int argc, char **argv);
 int confreader();
-void check_options(PassGenOptions options);
 
 
 #endif

@@ -2,14 +2,14 @@
 #include "gen.h"
 
 
-PassGenOptions options = { MODE_DEFAULT, 0, 0, NULL };
+PassGenOptions options = { MODE_DEFAULT, 0, 0, NULL, NULL };
 PassGenError err = { ERR_NO, "\0" };
 
 int run(int argc, char **argv)
 {
 	if (argc < 2) 
 	{
-        confreader();
+        handle_err(ERR_PARSING, "There's no arguments! Please, try again.");
     }
     else parse_options(argc, argv);
 
@@ -96,7 +96,7 @@ void handle_err(PassGenErrCode code, char *mess)
 
 void parse_options(int argc, char **argv)
 {
-    const char *KEYS = "t:ds:c:";       //arg keys
+    const char *KEYS = "pt:ds:c:";       //arg keys
     opterr = 0;
 
     int c;
@@ -151,6 +151,12 @@ void parse_options(int argc, char **argv)
                                    "Too many arguments for template mode! Please, try again.");
                     break;
                 }
+            case 'p':         //config
+                {
+                  options.path = optarg;
+                  confreader(options.path);
+                  break;
+                }
             case '?':
                 {
                     if (optopt == 'c' || optopt == 't')
@@ -167,13 +173,7 @@ void parse_options(int argc, char **argv)
     }
 }
 
-
-void check_options(PassGenOptions options)
-{
-  
-}
-
-int confreader()
+int confreader(char *path)
 {
     char* buff;
     char cdef[] = "DEFAULT_MODE=";
@@ -182,10 +182,11 @@ int confreader()
     char csize[] = "PASS_SIZE=";
     char ctemplate[] = "TEMPLATE=";
     
-    FILE *config = fopen("PassConfig", "r");
+    FILE *config = fopen(path, "r");
 
     if (config != NULL)
     {
+      printf("OPENED\n");
        while ( !feof(config) )
        {
        		int i = 0;
@@ -241,12 +242,10 @@ int confreader()
            }
            free(buff);       
        }
-     	//printf("options.mode = %d\n", options.mode);
-   		// printf("options.pass_strength = %d\n", options.pass_strength);
-    	// printf("options.pass_size = %d\n", options.pass_size);
-    	// printf("options.template: %s\n", options.template);
+     	printf("options.mode = %d\n", options.mode);
+   		printf("options.pass_strength = %d\n", options.pass_strength);
+    	printf("options.pass_size = %d\n", options.pass_size);
+    	printf("options.template: %s\n", options.template);
       fclose(config);    
-    }
-    else handle_err(ERR_PARSING, "Too few arguments! Please, try again.");
-       
+    }       
 }
