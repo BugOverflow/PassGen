@@ -7,7 +7,11 @@ PassGenError err = { ERR_NO, "\0" };
 
 int run(int argc, char **argv)
 {
-    parse_options(argc, argv);
+	if (argc < 2) 
+	{
+        confreader();
+    }
+    else parse_options(argc, argv);
 
     if (err.code != ERR_NO) {
         fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
@@ -27,6 +31,18 @@ int run(int argc, char **argv)
 	    if (err.code == -1) {
 		handle_err(ERR_FUNC_DEFOULT_GEN,
                                "Incorrect length of pass!  Please, try again.");
+		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+		return EXIT_FAILURE;
+	    }
+	    if (err.code == -2) {
+		handle_err(ERR_FUNC_DEFOULT_GEN,
+                               "Incorrect strength of password!  Please, try again.");
+		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
+		return EXIT_FAILURE;
+	    }
+	    if (err.code == -3) {
+		handle_err(ERR_FUNC_DEFOULT_GEN,
+                               "Error of memory allocation!");
 		fprintf(stderr, "Err: %d, %s \n", err.code, err.message);
 		return EXIT_FAILURE;
 	    }
@@ -80,11 +96,6 @@ void handle_err(PassGenErrCode code, char *mess)
 
 void parse_options(int argc, char **argv)
 {
-    if (argc < 2) {
-        handle_err(ERR_PARSING, "Need more arguments.");
-        return;
-    }
-
     const char *KEYS = "t:ds:c:";       //arg keys
     opterr = 0;
 
@@ -154,4 +165,88 @@ void parse_options(int argc, char **argv)
                 break;
         }
     }
+}
+
+
+void check_options(PassGenOptions options)
+{
+  
+}
+
+int confreader()
+{
+    char* buff;
+    char cdef[] = "DEFAULT_MODE=";
+    char ctem[] = "TEMPLATE_MODE=";
+    char cstren[] = "PASS_STRENGTH="; 
+    char csize[] = "PASS_SIZE=";
+    char ctemplate[] = "TEMPLATE=";
+    
+    FILE *config = fopen("PassConfig", "r");
+
+    if (config != NULL)
+    {
+       while ( !feof(config) )
+       {
+       		int i = 0;
+       		buff = calloc(128, sizeof(char));
+       		while ((buff[i] = fgetc(config)) != '\n' && (buff[i] != EOF)) 
+       		{
+          		i++;
+       		}
+
+       		// printf("%s", buff);
+
+       		if (sstr(buff, cdef) > -1)
+           {
+           		char* value = returnvalue(buff, cdef);
+
+           		if (atoi(value) == 1)
+           			options.mode = MODE_DEFAULT;
+           }
+           
+           if (sstr(buff, ctem) > -1)
+           {
+           		
+           		char* value = returnvalue(buff, ctem);
+           		
+           		if (atoi(value) == 1)
+           			options.mode = MODE_TEMPLATE;
+           }
+
+           if (sstr(buff, cstren) > -1)
+           {
+           		char* value = returnvalue(buff, cstren);
+           		int x = atoi(value);
+           		options.pass_strength = x;
+           }
+           
+          if (sstr(buff, csize) > -1)
+           {
+           		char* value = returnvalue(buff, csize);
+           		int x = atoi(value);
+           		options.pass_size = x;
+           }
+           
+           if (sstr(buff, ctemplate) > -1)
+           {
+           		char* t_value = calloc(128, sizeof(char));
+           		if (t_value != NULL)
+           		{
+           			get_template(buff, ctemplate, t_value);           		
+           			options.template = t_value;
+           		}
+           		
+           		free(t_value);
+           }
+           free(buff);       
+       }
+     	//printf("options.mode = %d\n", options.mode);
+   		// printf("options.pass_strength = %d\n", options.pass_strength);
+    	// printf("options.pass_size = %d\n", options.pass_size);
+    	// printf("options.template: %s\n", options.template);
+      fclose(config);    
+    }
+    else handle_err(ERR_PARSING, "Too few arguments! Please, try again.");
+       
 }

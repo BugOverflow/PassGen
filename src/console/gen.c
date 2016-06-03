@@ -109,13 +109,13 @@ int default_gen(PassGenOptions options, char *pass)
     int seed = 0;
     
     if (pass == NULL)
-	return -3; //нулевая строка pass
+	   return -3; //нулевая строка pass
 
     if (options.pass_size <= 0 || options.pass_size > 32)
-	return -1; //недопустимая длина пароля
+	   return -1; //недопустимая длина пароля
     
-    if (options.pass_strength < 1 || options.pass_strength > 5)
-	return -2; //недопустимая сложность пароля
+    if (options.pass_strength < 1 || options.pass_strength > 4)
+	   return -2; //недопустимая сложность пароля
     
     for (int i = 0; i < options.pass_size; ++i) {
         for (int j = 0; h[j] != '\0'; j++) {
