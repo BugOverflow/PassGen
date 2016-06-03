@@ -1,5 +1,6 @@
 #include "application.h"
 #include "gen.h"
+#include "config.h"
 
 
 PassGenOptions options = { MODE_DEFAULT, 0, 0, NULL, NULL };
@@ -154,7 +155,7 @@ void parse_options(int argc, char **argv)
             case 'p':         //config
                 {
                   options.path = optarg;
-                  confreader(optarg);
+                  confreader(optarg, &options);
                   break;
                 }
             case '?':
@@ -171,81 +172,4 @@ void parse_options(int argc, char **argv)
                 break;
         }
     }
-}
-
-int confreader(char *path)
-{
-    char* buff;
-    char cdef[] = "DEFAULT_MODE=";
-    char ctem[] = "TEMPLATE_MODE=";
-    char cstren[] = "PASS_STRENGTH="; 
-    char csize[] = "PASS_SIZE=";
-    char ctemplate[] = "TEMPLATE=";
-    
-    FILE *config = fopen(path, "r");
-
-    if (config != NULL)
-    {
-      printf("OPENED\n");
-       while ( !feof(config) )
-       {
-       		int i = 0;
-       		buff = calloc(128, sizeof(char));
-       		while ((buff[i] = fgetc(config)) != '\n' && (buff[i] != EOF)) 
-       		{
-          		i++;
-       		}
-
-       		// printf("%s", buff);
-
-       		if (sstr(buff, cdef) > -1)
-           {
-           		char* value = returnvalue(buff, cdef);
-
-           		if (atoi(value) == 1)
-           			options.mode = MODE_DEFAULT;
-           }
-           
-           if (sstr(buff, ctem) > -1)
-           {
-           		
-           		char* value = returnvalue(buff, ctem);
-           		
-           		if (atoi(value) == 1)
-           			options.mode = MODE_TEMPLATE;
-           }
-
-           if (sstr(buff, cstren) > -1)
-           {
-           		char* value = returnvalue(buff, cstren);
-           		int x = atoi(value);
-           		options.pass_strength = x;
-           }
-           
-          if (sstr(buff, csize) > -1)
-           {
-           		char* value = returnvalue(buff, csize);
-           		int x = atoi(value);
-           		options.pass_size = x;
-           }
-           
-           if (sstr(buff, ctemplate) > -1)
-           {
-           		char* t_value = calloc(128, sizeof(char));
-           		if (t_value != NULL)
-           		{
-           			get_template(buff, ctemplate, t_value);           		
-           			options.template = t_value;
-           		}
-           		
-           		free(t_value);
-           }
-           free(buff);       
-       }
-     	printf("options.mode = %d\n", options.mode);
-   		printf("options.pass_strength = %d\n", options.pass_strength);
-    	printf("options.pass_size = %d\n", options.pass_size);
-    	printf("options.template: %s\n", options.template);
-      fclose(config);    
-    }       
 }

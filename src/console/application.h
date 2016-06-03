@@ -2,7 +2,6 @@
 #define APPLICATION_H
 
 #include "parsing.h"
-#include "config.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -39,7 +38,5 @@ typedef struct {
 int run(int argc, char **argv);
 void handle_err(PassGenErrCode code, char *mess);
 void parse_options(int argc, char **argv);
-int confreader();
-
 
 #endif

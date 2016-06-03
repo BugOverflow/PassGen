@@ -1,7 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <strings.h>
+#include <string.h>
+#include "application.h"
 
 //поиск символа в строке
 int schr(char str[], char ch);
@@ -22,5 +23,7 @@ void copy(char s1[], char s2[]);
 char* returnvalue(char *str, char *mode);
 
 void get_template(char str[], char mode[], char value[]);
+
+int confreader(char *path, PassGenOptions *options);
 
 #endif
