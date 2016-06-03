@@ -159,7 +159,7 @@ void parse_options(int argc, char **argv)
                 }
             case '?':
                 {
-                    if (optopt == 'c' || optopt == 't')
+                    if (optopt == 'c' || optopt == 't' || optopt == 'p')
                         handle_err(ERR_PARSING,
                                    "This option requires an argument.");
                     else if (isprint(optopt))
