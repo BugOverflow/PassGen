@@ -96,7 +96,7 @@ void handle_err(PassGenErrCode code, char *mess)
 
 void parse_options(int argc, char **argv)
 {
-    const char *KEYS = "pt:ds:c:";       //arg keys
+    const char *KEYS = "p:t:ds:c:";       //arg keys
     opterr = 0;
 
     int c;
@@ -154,7 +154,7 @@ void parse_options(int argc, char **argv)
             case 'p':         //config
                 {
                   options.path = optarg;
-                  confreader(options.path);
+                  confreader(optarg);
                   break;
                 }
             case '?':
